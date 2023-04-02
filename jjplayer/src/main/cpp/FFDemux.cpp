@@ -9,6 +9,13 @@ extern "C"{
 #include <libavformat/avformat.h>
 }
 
+void FFDemux::initFFmpeg() {
+    LOGD("FFDemux::initFFmpeg");
+    av_register_all(); //注册所有的封装器
+    avcodec_register_all(); //注册所有的解码器
+    avformat_network_init(); //初始化网络
+}
+
 FFDemux::FFDemux() {
     static bool isInit = false;
     if (!isInit){
@@ -17,14 +24,7 @@ FFDemux::FFDemux() {
     }
 }
 
-void FFDemux::initFFmpeg() {
-    LOGD("FFDemux::initFFmpeg");
-    av_register_all(); //注册所有的封装器
-    avcodec_register_all(); //注册所有的解码器
-    avformat_network_init(); //初始化网络
-}
-
-bool FFDemux::Open(const char* url){
+bool FFDemux::open(const char* url){
     LOGD("FFDemux::Open -> %s", url);
 
     int openResult = avformat_open_input(&avFormatContext, url, 0, 0);
@@ -50,9 +50,7 @@ bool FFDemux::Open(const char* url){
     return true;
 }
 
-XData FFDemux::Read(){
-    LOGD("FFDemux::Read");
-
+XData FFDemux::read(){
     if (!avFormatContext) return XData();
 
     AVPacket *avPacket = av_packet_alloc();
@@ -70,7 +68,7 @@ XData FFDemux::Read(){
     return d;
 }
 
-bool FFDemux::Close(){
+bool FFDemux::close(){
     LOGD("FFDemux::Close");
     return false;
 }

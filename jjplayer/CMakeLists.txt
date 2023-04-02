@@ -27,6 +27,7 @@ add_library(jjplayer
         src/main/cpp/IDemux.cpp
         src/main/cpp/FFDemux.cpp
         src/main/cpp/XData.cpp
+        src/main/cpp/XThread.cpp
         )
 
 find_library(

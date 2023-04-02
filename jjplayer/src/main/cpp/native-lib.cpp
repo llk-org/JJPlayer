@@ -18,14 +18,11 @@ extern "C"
 JNIEXPORT jboolean JNICALL
 Java_com_llk_jjplayer_NativeUtils_open(JNIEnv *env, jobject thiz, jstring url) {
     IDemux *demux = new FFDemux();
-    bool isSuccess = demux->Open(env->GetStringUTFChars(url, NULL));
+    bool isSuccess = demux->open(env->GetStringUTFChars(url, NULL));
 
     if (isSuccess){
 
-        while (true){
-            XData d = demux->Read();
-
-        }
+        demux->start();
 
     }
 

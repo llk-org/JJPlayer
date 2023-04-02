@@ -8,7 +8,7 @@ extern "C"{
 #include <libavformat/avformat.h>
 }
 
-void XData::Drop() {
+void XData::release() {
     if(!data) return;
 
     av_packet_free((AVPacket **)&data);
