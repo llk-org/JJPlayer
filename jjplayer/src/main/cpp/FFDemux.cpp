@@ -50,13 +50,27 @@ bool FFDemux::Open(const char* url){
     return true;
 }
 
+XData FFDemux::Read(){
+    LOGD("FFDemux::Read");
+
+    if (!avFormatContext) return XData();
+
+    AVPacket *avPacket = av_packet_alloc();
+    int readResult = av_read_frame(avFormatContext, avPacket);
+    if (readResult != 0){
+        LOGE("av_read_frame fail, result=%d", readResult);
+        av_packet_free(&avPacket);
+        return XData();
+    }
+
+    XData d;
+    d.data = (unsigned char *)avPacket;
+    d.size = avPacket->size;
+    LOGD("aaa size=%d pts=%lld", avPacket->size, avPacket->pts);
+    return d;
+}
+
 bool FFDemux::Close(){
     LOGD("FFDemux::Close");
     return false;
-}
-
-XData FFDemux::Read(){
-    LOGD("FFDemux::Read");
-    XData a;
-    return a;
 }
