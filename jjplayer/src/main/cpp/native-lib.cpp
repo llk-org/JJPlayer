@@ -21,7 +21,6 @@ Java_com_llk_jjplayer_NativeUtils_open(JNIEnv *env, jobject thiz, jstring url) {
     bool isSuccess = demux->open(env->GetStringUTFChars(url, NULL));
 
     if (isSuccess){
-
         demux->start();
 
     }

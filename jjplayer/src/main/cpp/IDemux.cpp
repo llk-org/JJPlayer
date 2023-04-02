@@ -6,7 +6,7 @@
 #include "Log.h"
 
 void IDemux::run() {
-    while (true){
+    while (!isStopThread){
         XData d = read();
         LOGD("run %d", d.size);
         if (d.size <= 0){
