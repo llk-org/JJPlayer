@@ -7,31 +7,31 @@
 
 void IObserver::addObserver(IObserver *observer) {
     if (!observer) return;
-    listMutex.lock();
+    mutex_observers.lock();
     LOGV("IObserver::addObserver %p", observer);
-    observerList.push_back(observer);
-    listMutex.unlock();
+    observers.push_back(observer);
+    mutex_observers.unlock();
 }
 
 void IObserver::removeObserver(IObserver *observer) {
     if (!observer) return;
-    listMutex.lock();
+    mutex_observers.lock();
     LOGV("IObserver::removeObserver %p", observer);
-    auto itr = observerList.begin();
-    while (itr != observerList.end()) {
+    auto itr = observers.begin();
+    while (itr != observers.end()) {
         if (*itr == observer) {
-            itr = observerList.erase(itr);//删除元素，返回值指向已删除元素的下一个位置
+            itr = observers.erase(itr);//删除元素，返回值指向已删除元素的下一个位置
         } else {
             ++itr;
         }
-        listMutex.unlock();
     }
+    mutex_observers.unlock();
 }
 
 void IObserver::notifyDataToAllObserver(XData data) {
-    listMutex.lock();
-    for (auto &i: observerList) {
+    mutex_observers.lock();
+    for (auto &i: observers) {
         i->updateData(data);
     }
-    listMutex.unlock();
+    mutex_observers.unlock();
 }

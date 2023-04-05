@@ -37,15 +37,21 @@ bool FFDecode::openDecode(XParameter xParam) {
         return false;
     }
 
+    if (codecContext->codec_type == AVMEDIA_TYPE_AUDIO){
+        isAudioDecode = true;
+    } else{
+        isAudioDecode = false;
+    }
+
     LOGI("FFDecode::openDecode success");
     return true;
 }
 
-bool FFDecode::sendPacket(XData xData) {
-    if (!xData.data || xData.size<=0) return false;
+bool FFDecode::sendPacketToDecoder(XData packet){
+    if (!packet.data || packet.size<=0) return false;
 
     if (!codecContext) return false;
-    int sendResult = avcodec_send_packet(codecContext, (AVPacket*)xData.data);
+    int sendResult = avcodec_send_packet(codecContext, (AVPacket*)packet.data);
     if (sendResult != 0){ //发送失败
         return false;
     }
@@ -53,7 +59,7 @@ bool FFDecode::sendPacket(XData xData) {
     return false;
 }
 
-XData FFDecode::recvFrame() {
+XData FFDecode::receiveFrameFromDecoder() {
     if (!codecContext) return {};
 
     //创建帧对象
@@ -68,12 +74,14 @@ XData FFDecode::recvFrame() {
 
     XData data;
     data.data = (unsigned char*)frame;
-    if (codecContext->codec_type == AVMEDIA_TYPE_VIDEO){
+    if (codecContext->codec_type == AVMEDIA_TYPE_VIDEO){ //视频 大小=单个YUV大小*数据量
         //linesize最大8位的一个空间，如果是YUV，linesize就表示每一路一行数据的大小
         //linesize[0]就是Y数据大小，linesize[1]就是U数据大小，linesize[2]就是V数据大小
         data.size = (frame->linesize[0] + frame->linesize[1] + frame->linesize[2]) * frame->height;
-    }else{
-
+    }else{ //音频 大小=单个样本大小*数据量*通道数
+        //av_get_bytes_per_sample 获取单个样本大小
+        //frame->nb_samples 样本数量
+        data.size = av_get_bytes_per_sample((AVSampleFormat)frame->format) * frame->nb_samples * 2;
     }
 
     return data;

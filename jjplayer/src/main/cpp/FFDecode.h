@@ -13,8 +13,8 @@ struct AVFrame;
 class FFDecode : public IDecode{
 public:
     virtual bool openDecode(XParameter xParam);
-    virtual bool sendPacket(XData xData);
-    virtual XData recvFrame();
+    virtual bool sendPacketToDecoder(XData packet);
+    virtual XData receiveFrameFromDecoder();
 protected:
     AVCodecContext *codecContext = 0;
     AVFrame *frame = 0;
