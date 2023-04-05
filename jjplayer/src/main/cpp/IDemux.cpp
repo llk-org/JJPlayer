@@ -8,9 +8,8 @@
 void IDemux::run() {
     while (!isStopThread){
         XData d = read();
-        LOGD("run %d", d.size);
-        if (d.size <= 0){
-            break;
+        if (d.size > 0){
+            notifyDataToAllObserver(d);
         }
     }
 }

@@ -45,26 +45,26 @@ bool FFDemux::open(const char* url){
 
     //TIMER_ABSTIME 是时间单位，表示1秒有多少个时间单位，除以1000单位就变成毫秒
     totalMs = avFormatContext->duration / (TIMER_ABSTIME/1000);
-    LOGD("total ms =%d", totalMs);
+    //LOGD("total ms =%d", totalMs);
 
     return true;
 }
 
 XData FFDemux::read(){
-    if (!avFormatContext) return XData();
+    if (!avFormatContext) return {};
 
     AVPacket *avPacket = av_packet_alloc();
     int readResult = av_read_frame(avFormatContext, avPacket);
     if (readResult != 0){
-        LOGE("av_read_frame fail, result=%d", readResult);
+//        LOGE("av_read_frame fail, result=%d", readResult);
         av_packet_free(&avPacket);
-        return XData();
+        return {};
     }
 
     XData d;
     d.data = (unsigned char *)avPacket;
     d.size = avPacket->size;
-    LOGD("aaa size=%d pts=%lld", avPacket->size, avPacket->pts);
+//    LOGD("aaa size=%d pts=%lld", avPacket->size, avPacket->pts);
     return d;
 }
 
