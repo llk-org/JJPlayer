@@ -1,7 +1,7 @@
 #ifndef LOG_H
 #define LOG_H
 
-#include <android/log.h>
+#include "../../../../../../../../Library/Android/sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/android/log.h"
 
 #define LOG_TAG "llk"
 

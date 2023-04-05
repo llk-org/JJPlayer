@@ -3,12 +3,12 @@
 //
 
 #include "IObserver.h"
-#include "Log.h"
+#include "../utils/Log.h"
 
 void IObserver::addObserver(IObserver *observer) {
     if (!observer) return;
     listMutex.lock();
-    LOGD("IObserver::addObserver %p", observer);
+    LOGV("IObserver::addObserver %p", observer);
     observerList.push_back(observer);
     listMutex.unlock();
 }
@@ -16,7 +16,7 @@ void IObserver::addObserver(IObserver *observer) {
 void IObserver::removeObserver(IObserver *observer) {
     if (!observer) return;
     listMutex.lock();
-    LOGD("IObserver::removeObserver %p", observer);
+    LOGV("IObserver::removeObserver %p", observer);
     auto itr = observerList.begin();
     while (itr != observerList.end()) {
         if (*itr == observer) {

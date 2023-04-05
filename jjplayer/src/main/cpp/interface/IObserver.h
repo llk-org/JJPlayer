@@ -5,8 +5,8 @@
 #ifndef JJPLAYER_IOBSERVER_H
 #define JJPLAYER_IOBSERVER_H
 
-#include "XData.h"
-#include "XThread.h"
+#include "../bean/XData.h"
+#include "../utils/XThread.h"
 #include <vector>
 #include <mutex>
 

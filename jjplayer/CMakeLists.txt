@@ -24,11 +24,21 @@ add_library(jjplayer
         SHARED
         src/main/cpp/native-lib.cpp
 
-        src/main/cpp/IDemux.cpp
+        # 接口类
+        src/main/cpp/interface/IDemux.cpp
+        src/main/cpp/interface/IDecode.cpp
+        src/main/cpp/interface/IObserver.cpp
+
+        # 工具类
+        src/main/cpp/utils/XThread.cpp
+
+        # 结构体
+        src/main/cpp/bean/XData.cpp
+        src/main/cpp/bean/XParameter.cpp
+
+        # 实现类
         src/main/cpp/FFDemux.cpp
-        src/main/cpp/XData.cpp
-        src/main/cpp/XThread.cpp
-        src/main/cpp/IObserver.cpp
+        src/main/cpp/FFDecode.cpp
         )
 
 find_library(

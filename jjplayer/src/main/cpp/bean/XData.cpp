@@ -5,7 +5,7 @@
 #include "XData.h"
 
 extern "C"{
-#include <libavformat/avformat.h>
+#include "libavformat/avformat.h"
 }
 
 void XData::release() {

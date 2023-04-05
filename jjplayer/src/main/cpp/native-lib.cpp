@@ -2,8 +2,9 @@
 #include "iostream"
 #include <string>
 
-#include "Log.h"
+#include "utils/Log.h"
 #include "FFDemux.h"
+#include "FFDecode.h"
 
 class TestOb : public IObserver{
 public:
@@ -30,8 +31,11 @@ Java_com_llk_jjplayer_NativeUtils_open(JNIEnv *env, jobject thiz, jstring url) {
     IDemux *demux = new FFDemux();
     demux->addObserver(ob);
     bool isSuccess = demux->open(env->GetStringUTFChars(url, NULL));
-
     if (isSuccess){
+        //视频解码器
+        IDecode *videoDecode = new FFDecode();
+        videoDecode->openDecode(demux->getVideoParam());
+
         demux->start();
 
     }

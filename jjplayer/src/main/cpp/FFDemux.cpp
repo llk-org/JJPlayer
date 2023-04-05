@@ -3,7 +3,7 @@
 //
 
 #include "FFDemux.h"
-#include "Log.h"
+#include "utils/Log.h"
 
 extern "C"{
 #include <libavformat/avformat.h>
@@ -22,6 +22,25 @@ FFDemux::FFDemux() {
         isInit = true;
         initFFmpeg();
     }
+}
+
+XParameter FFDemux::getVideoParam() {
+    if (!avFormatContext){
+        LOGW("FFDemux::getVideoParam fail, avFormatContext is NULL");
+        return {};
+    }
+
+    //获取视频流索引
+    int streamIndex = av_find_best_stream(avFormatContext, AVMEDIA_TYPE_VIDEO, -1, -1, 0, 0);
+    LOGD("FFDemux::getVideoParam() videoStream-->%d", streamIndex);
+    if (streamIndex < 0){
+        LOGW("av_find_best_stream fail, not found video stream.");
+        return {};
+    }
+
+    XParameter xP;
+    xP.parameters = avFormatContext->streams[streamIndex]->codecpar;
+    return xP;
 }
 
 bool FFDemux::open(const char* url){
