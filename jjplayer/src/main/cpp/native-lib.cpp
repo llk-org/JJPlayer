@@ -34,7 +34,7 @@ Java_com_llk_jjplayer_NativeUtils_open(JNIEnv *env, jobject thiz, jstring url) {
     if (isSuccess){
         //视频解码器
         IDecode *videoDecode = new FFDecode();
-        videoDecode->openDecode(demux->getVideoParam());
+        videoDecode->openDecode(demux->getAVParam(false));
 
         demux->start();
 

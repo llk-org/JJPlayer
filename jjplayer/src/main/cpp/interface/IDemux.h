@@ -16,7 +16,7 @@ public:
     virtual bool open(const char* url) = 0; //打开文件 或 流媒体（rtmp/http/rtsp）
     virtual bool close() = 0; //关闭文件 或 流媒体
 
-    virtual XParameter getVideoParam() = 0; //获取视频参数
+    virtual XParameter getAVParam(bool isGetAudio) = 0; //获取视频 或 音频参数
 
     virtual XData read() = 0; //读取一帧数据，数据由调用者清理
 

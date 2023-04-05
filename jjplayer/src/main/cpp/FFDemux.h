@@ -15,12 +15,14 @@ public:
     FFDemux();
     virtual bool open(const char* url);
     virtual bool close();
-    virtual XParameter getVideoParam();
+    virtual XParameter getAVParam(bool isGetAudio);
     virtual XData read();
 private:
     virtual void initFFmpeg();
     //c++开始支持默认赋值，但是只有在执行无参构造函数的时候才会执行的（走了有参构造函数，是不会赋值的），这里需要注意。
     AVFormatContext *avFormatContext = 0;
+    int videoStreamIndex = 0;
+    int audioStreamIndex = 1;
 };
 
 

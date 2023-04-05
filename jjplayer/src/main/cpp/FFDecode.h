@@ -8,12 +8,16 @@
 #include "interface/IDecode.h"
 
 struct AVCodecContext;
+struct AVFrame;
 
 class FFDecode : public IDecode{
 public:
     virtual bool openDecode(XParameter xParam);
+    virtual bool sendPacket(XData xData);
+    virtual XData recvFrame();
 protected:
     AVCodecContext *codecContext = 0;
+    AVFrame *frame = 0;
 };
 
 
