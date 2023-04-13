@@ -28,6 +28,9 @@ add_library(jjplayer
         src/main/cpp/interface/IDemux.cpp
         src/main/cpp/interface/IDecode.cpp
         src/main/cpp/interface/IObserver.cpp
+        src/main/cpp/interface/IVideoView.cpp
+        src/main/cpp/interface/IEGL.cpp
+        src/main/cpp/interface/IShader.cpp
 
         # 工具类
         src/main/cpp/utils/XThread.cpp
@@ -35,10 +38,13 @@ add_library(jjplayer
         # 结构体
         src/main/cpp/bean/XData.cpp
         src/main/cpp/bean/XParameter.cpp
+        src/main/cpp/bean/XTexture.cpp
 
         # 实现类
         src/main/cpp/FFDemux.cpp
         src/main/cpp/FFDecode.cpp
+        src/main/cpp/GLVideoView.cpp
+        src/main/cpp/PlayerEGL.cpp
         )
 
 find_library(

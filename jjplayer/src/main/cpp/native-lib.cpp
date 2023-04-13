@@ -1,10 +1,12 @@
 #include <jni.h>
 #include "iostream"
 #include <string>
+#include <android/native_window_jni.h>
 
 #include "utils/Log.h"
 #include "FFDemux.h"
 #include "FFDecode.h"
+#include "PlayerEGL.h"
 
 jint JNI_OnLoad(JavaVM *vm, void* reserved) {
     JNIEnv *env = nullptr;
@@ -45,4 +47,22 @@ Java_com_llk_jjplayer_NativeUtils_open(JNIEnv *env, jobject thiz, jstring url) {
     }
 
     return isSuccess;
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_llk_jjplayer_NativeUtils_surfaceCreated(JNIEnv *env, jobject thiz, jobject surface) {
+    ANativeWindow *nativeWindow = ANativeWindow_fromSurface(env, surface);
+    PlayerEGL::get()->init(nativeWindow);
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_llk_jjplayer_NativeUtils_surfaceChanged(JNIEnv *env, jobject thiz, jobject surface,
+                                                 jint format, jint w, jint h) {
+    // TODO: implement surfaceChanged()
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_llk_jjplayer_NativeUtils_surfaceDestroyed(JNIEnv *env, jobject thiz, jobject surface) {
+    // TODO: implement surfaceDestroyed()
 }
