@@ -7,6 +7,7 @@
 #include "FFDemux.h"
 #include "FFDecode.h"
 #include "PlayerEGL.h"
+#include "GLShader.h"
 
 jint JNI_OnLoad(JavaVM *vm, void* reserved) {
     JNIEnv *env = nullptr;
@@ -52,7 +53,11 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_llk_jjplayer_NativeUtils_surfaceCreated(JNIEnv *env, jobject thiz, jobject surface) {
     ANativeWindow *nativeWindow = ANativeWindow_fromSurface(env, surface);
+
     PlayerEGL::get()->init(nativeWindow);
+
+    GLShader glShader;
+    glShader.init();
 }
 
 extern "C"
