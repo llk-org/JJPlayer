@@ -6,8 +6,13 @@
 #define JJPLAYER_IVIDEOVIEW_H
 
 
-class IVideoView {
+#include "../bean/XData.h"
 
+class IVideoView {
+public:
+    virtual void setRender(void *window) = 0;
+    virtual void render(XData data) = 0;
+    virtual void update(XData data);
 };
 
 

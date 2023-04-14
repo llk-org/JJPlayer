@@ -6,8 +6,17 @@
 #define JJPLAYER_GLVIDEOVIEW_H
 
 
-class GLVideoView {
+#include "interface/IVideoView.h"
 
+class ITexture;
+
+class GLVideoView : public IVideoView{
+public:
+    virtual void setRender(void *window);
+    virtual void render(XData data);
+protected:
+    void *view = 0;
+    ITexture *texture = 0;
 };
 
 

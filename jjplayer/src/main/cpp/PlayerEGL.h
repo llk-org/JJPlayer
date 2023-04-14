@@ -16,8 +16,8 @@ private:
     EGLSurface eglSurface = EGL_NO_SURFACE;
     EGLContext eglContext = EGL_NO_CONTEXT;
 public:
-    virtual bool init(void *window);
     static IEGL *get();
+    virtual bool init(void *window);
 };
 
 

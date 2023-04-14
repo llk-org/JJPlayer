@@ -10,8 +10,8 @@
  */
 class IEGL {
 public:
-    virtual bool init(void * window) = 0;
     static IEGL *get();
+    virtual bool init(void * window) = 0;
 
 protected:
     IEGL(){}
