@@ -14,6 +14,7 @@ public:
     GLShader glShader;
     static ITexture *makeTexture();
     virtual bool init(void *window);
+    virtual void draw(unsigned char *datas[], int width, int height);
 };
 
 

@@ -8,6 +8,10 @@
 #include "FFDecode.h"
 #include "PlayerEGL.h"
 #include "GLShader.h"
+#include "interface/IVideoView.h"
+#include "GLVideoView.h"
+
+IVideoView *videoView = NULL;
 
 jint JNI_OnLoad(JavaVM *vm, void* reserved) {
     JNIEnv *env = nullptr;
@@ -28,8 +32,8 @@ Java_com_llk_jjplayer_NativeUtils_open(JNIEnv *env, jobject thiz, jstring url) {
     bool isSuccess = demux->open(env->GetStringUTFChars(url, NULL));
     if (isSuccess){ //解封装成功
         //创建视频、音频解码器对象
-        IDecode *videoDecode = new FFDecode();
-        IDecode *audioDecode = new FFDecode();
+        IDecode *videoDecode = new FFDecode("VideoFFDecode");
+        IDecode *audioDecode = new FFDecode("AudioFFDecode");
         //启动解码器
         videoDecode->openDecode(demux->getAVParam(false));
         audioDecode->openDecode(demux->getAVParam(true));
@@ -42,6 +46,9 @@ Java_com_llk_jjplayer_NativeUtils_open(JNIEnv *env, jobject thiz, jstring url) {
         //启动解封装器线程，生产帧数据
         demux->start();
 
+        videoView = new GLVideoView();
+        videoDecode->addObserver(videoDecode);
+
         //启动解码器线程，
         videoDecode->start();
         audioDecode->start();
@@ -53,11 +60,10 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_llk_jjplayer_NativeUtils_surfaceCreated(JNIEnv *env, jobject thiz, jobject surface) {
     ANativeWindow *nativeWindow = ANativeWindow_fromSurface(env, surface);
-
-    PlayerEGL::get()->init(nativeWindow);
-
-    GLShader glShader;
-    glShader.init();
+    videoView->setRender(nativeWindow);
+//    PlayerEGL::get()->init(nativeWindow);
+//    GLShader glShader;
+//    glShader.init();
 }
 
 extern "C"

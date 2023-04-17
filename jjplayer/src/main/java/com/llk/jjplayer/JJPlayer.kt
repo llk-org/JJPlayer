@@ -17,17 +17,14 @@ class JJPlayer: GLSurfaceView{
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs){ }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
-        super.surfaceCreated(holder)
         NativeUtils.surfaceCreated(holder.surface)
     }
 
     override fun surfaceChanged(holder: SurfaceHolder, format: Int, w: Int, h: Int) {
-        super.surfaceChanged(holder, format, w, h)
         NativeUtils.surfaceChanged(holder.surface, format, w, h)
     }
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {
-        super.surfaceDestroyed(holder)
         NativeUtils.surfaceDestroyed(holder.surface)
     }
 }

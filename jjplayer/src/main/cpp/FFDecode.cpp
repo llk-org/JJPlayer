@@ -9,6 +9,10 @@ extern "C"{
 #include <libavcodec/avcodec.h>
 }
 
+FFDecode::FFDecode(const char *clazzName) {
+    className = clazzName;
+}
+
 bool FFDecode::openDecode(XParameter xParam) {
     if(!xParam.parameters) return false;
 
@@ -43,7 +47,7 @@ bool FFDecode::openDecode(XParameter xParam) {
         isAudioDecode = false;
     }
 
-    LOGI("FFDecode::openDecode success");
+    LOGI("%s::openDecode success", className);
     return true;
 }
 
@@ -78,11 +82,16 @@ XData FFDecode::receiveFrameFromDecoder() {
         //linesize最大8位的一个空间，如果是YUV，linesize就表示每一路一行数据的大小
         //linesize[0]就是Y数据大小，linesize[1]就是U数据大小，linesize[2]就是V数据大小
         data.size = (frame->linesize[0] + frame->linesize[1] + frame->linesize[2]) * frame->height;
+
+        data.videoWidth = frame->width;
+        data.videoHeight = frame->height;
     }else{ //音频 大小=单个样本大小*数据量*通道数
         //av_get_bytes_per_sample 获取单个样本大小
         //frame->nb_samples 样本数量
         data.size = av_get_bytes_per_sample((AVSampleFormat)frame->format) * frame->nb_samples * 2;
     }
+
+    memcpy(data.datas, frame->data, sizeof(data.datas));
 
     return data;
 }

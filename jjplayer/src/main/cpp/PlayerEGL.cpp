@@ -57,3 +57,11 @@ bool PlayerEGL::init(void *window) {
 
     return true;
 }
+
+void PlayerEGL::draw() {
+    if (eglDisplay == EGL_NO_DISPLAY || eglSurface == EGL_NO_SURFACE){
+        return;
+    }
+    //把surface数据中的buffer交换到显示设备中来
+    eglSwapBuffers(eglDisplay, eglSurface);
+}

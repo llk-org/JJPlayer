@@ -21,12 +21,14 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+    }
 
+    override fun onResume() {
+        super.onResume()
         if (checkStoragePermissions()){
             openFile()
         }
     }
-
 
     private fun openFile(){
         NativeUtils.open("sdcard/v1080.mp4")

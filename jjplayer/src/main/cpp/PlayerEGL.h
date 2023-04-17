@@ -18,6 +18,7 @@ private:
 public:
     static IEGL *get();
     virtual bool init(void *window);
+    virtual void draw();
 };
 
 

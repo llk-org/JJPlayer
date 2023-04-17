@@ -21,3 +21,11 @@ bool GLTexture::init(void *window) {
 
     return true;
 }
+
+void GLTexture::draw(unsigned char *datas[], int width, int height) {
+    glShader.getTexture(0, width, height, datas[0]); //Y
+    glShader.getTexture(1, width/2, height/2, datas[1]); //U
+    glShader.getTexture(2, width/2, height/2, datas[2]); //V
+    glShader.draw();
+
+}
