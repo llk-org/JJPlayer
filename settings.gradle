@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "JJPlayer"
 include ':app'
 include ':jjplayer'
+include ':test'
