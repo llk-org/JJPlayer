@@ -43,13 +43,12 @@ Java_com_llk_jjplayer_NativeUtils_open(JNIEnv *env, jobject thiz, jstring url) {
         demux->addObserver(videoDecode);
         demux->addObserver(audioDecode);
 
-        //启动解封装器线程，生产帧数据
-        demux->start();
-
         videoView = new GLVideoView();
-        videoDecode->addObserver(videoDecode);
+        videoDecode->addObserver(videoView);
 
-        //启动解码器线程，
+        //启动解封装线程，生产帧数据
+        demux->start();
+        //启动解码线程，生产解码后的帧数据
         videoDecode->start();
         audioDecode->start();
     }

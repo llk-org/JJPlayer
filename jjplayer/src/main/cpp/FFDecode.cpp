@@ -57,9 +57,11 @@ bool FFDecode::sendPacketToDecoder(XData packet){
     if (!codecContext) return false;
     int sendResult = avcodec_send_packet(codecContext, (AVPacket*)packet.data);
     if (sendResult != 0){ //发送失败
+        LOGE("ffffffff %s %d", className, sendResult);
         return false;
     }
 
+    LOGE("ttttttt %s", className);
     return false;
 }
 

@@ -3,7 +3,6 @@
 //
 
 #include "IDemux.h"
-#include "../utils/Log.h"
 
 void IDemux::run() {
     while (!isStopThread){

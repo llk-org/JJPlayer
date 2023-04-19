@@ -71,7 +71,7 @@ bool FFDemux::open(const char* url){
 
     //TIMER_ABSTIME 是时间单位，表示1秒有多少个时间单位，除以1000单位就变成毫秒
     totalMs = avFormatContext->duration / (TIMER_ABSTIME/1000);
-    //LOGD("total ms =%d", totalMs);
+    LOGD("total ms =%d", totalMs);
 
     //提前获取一下流索引，缓存起来
     getAVParam(false);
@@ -96,6 +96,7 @@ XData FFDemux::read(){
     if (avPacket->stream_index == audioStreamIndex){
         d.isAudio = true;
     } else if(avPacket->stream_index == videoStreamIndex){
+        LOGD("aaaaaaa %d", d.size);
         d.isAudio = false;
     } else{ //既不是音频也不是视频，就释放掉avPacket
         av_packet_free(&avPacket);
