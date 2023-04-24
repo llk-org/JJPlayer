@@ -70,8 +70,8 @@ bool FFDemux::open(const char* url){
     }
 
     //TIMER_ABSTIME 是时间单位，表示1秒有多少个时间单位，除以1000单位就变成毫秒
-    totalMs = avFormatContext->duration / (TIMER_ABSTIME/1000);
-    LOGD("total ms =%d", totalMs);
+    totalMs = avFormatContext->duration / (AV_TIME_BASE/1000);
+    LOGD("total ms=%d", totalMs);
 
     //提前获取一下流索引，缓存起来
     getAVParam(false);

@@ -52,7 +52,7 @@ bool FFDecode::openDecode(XParameter xParam) {
 }
 
 bool FFDecode::sendPacketToDecoder(XData packet){
-    if (!packet.data || packet.size<=0) return false;
+    if (packet.size<=0 || !packet.data) return false;
 
     if (!codecContext) return false;
     int sendResult = avcodec_send_packet(codecContext, (AVPacket*)packet.data);
